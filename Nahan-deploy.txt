@@ -1,0 +1,65 @@
+﻿--giturl
+
+https://github.com/xuelangZF/NaHan
+
+
+pip install -r requirements.txt
+
+config.py
+
+----------------------------------------------------------------
+
+# flask config
+ SECRET_KEY = os.environ.get('SECRET_KEY') or '!@#$%^&*12345678'
+ 
+ # Config about senting email.
+ MAIL_SERVER = 'smtp.qq.com'
+ MAIL_PORT = 465
+ MAIL_USE_SSL = True
+ MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+ MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+ FORUM_MAIL_SUBJECT_PREFIX = 'NaHan'
+ FORUM_MAIL_SENDER = 'Nahan <selfboot@qq.com>'
+
+ # Optional, setting about translation.
+ BABEL_DEFAULT_LOCALE = 'zh'
+ BABEL_DEFAULT_TIMEZONE = 'CST'
+ 
+ # Some config about forum, containing pagination page size, saving position and limit of avatar.
+ PER_PAGE = 10   
+ UPLOAD_FOLDER = os.path.join(basedir, 'nahan/static/upload')
+ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+ MAX_CONTENT_LENGTH = 512 * 1024
+ 
+ # Database setting.
+ SQLALCHEMY_DATABASE_URI = (os.environ.get('DEV_DATABASE_URL') or
+                        'mysql://root:******@localhost/nahan')
+
+----------------------------------------------------------------
+
+mysql部署
+
+mysql -u root -p
+123456
+
+--创建数据库
+
+create database blog_mini default character set utf8 collate utf8_general_ci;
+
+
+--执行完初始化数据库后检查数据库
+use NaHan;
+show tables;
+
+
+--初始化数据库
+python manage.py db upgrade
+
+
+--启动应用
+
+python manage.py runserver
+
+
+--管理员(注册用户后，将users表对应记录is_superuser的值修改为1)
+http://127.0.0.1:5000/admin/
